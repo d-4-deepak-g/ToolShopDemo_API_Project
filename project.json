@@ -4,9 +4,11 @@
   "description": "Test Automation Project",
   "main": "Main.xaml",
   "dependencies": {
-    "ToolShopDemoLib": "[1.0.3]",
+    "ToolShopDemoLib": "[1.0.8]",
+    "UiPath.GSuite.Activities": "[3.8.0-preview]",
     "UiPath.System.Activities": "[26.2.1]",
-    "UiPath.Testing.Activities": "[25.10.1]"
+    "UiPath.Testing.Activities": "[25.10.1]",
+    "UiPath.WebAPI.Activities": "[2.4.0]"
   },
   "webServices": [],
   "entitiesStores": [],
@@ -53,6 +55,51 @@
         "testCaseType": "TestCase",
         "executionTemplateInvokeIsolated": false,
         "fileName": "TestCase1.xaml"
+      },
+      {
+        "editingStatus": "Publishable",
+        "testCaseId": "ac83740d-aba4-4867-85c7-d8c50e5837a3",
+        "testCaseType": "TestCase",
+        "fileName": "baseTemplate.xaml"
+      },
+      {
+        "templateType": "TestCase",
+        "fileName": ".templates\\baseTemplate.xaml"
+      },
+      {
+        "editingStatus": "InProgress",
+        "testCaseId": "acac9401-ca52-438a-9726-7ce89076c502",
+        "testCaseType": "TestCase",
+        "executionTemplateInvokeIsolated": false,
+        "fileName": "TestCase\\TC_01_createUser.xaml"
+      },
+      {
+        "editingStatus": "InProgress",
+        "testCaseId": "127ae05a-046f-46d4-af22-c08105ad26ed",
+        "testCaseType": "TestCase",
+        "executionTemplateInvokeIsolated": false,
+        "fileName": "TestCase\\TC_02_WebLogin.xaml"
+      },
+      {
+        "editingStatus": "InProgress",
+        "testCaseId": "d572254c-a4de-49d6-9550-a6f79060e6dd",
+        "testCaseType": "TestCase",
+        "executionTemplateInvokeIsolated": false,
+        "fileName": "TestCase\\TC_03_LoginUser.xaml"
+      },
+      {
+        "editingStatus": "InProgress",
+        "testCaseId": "5d324787-3764-4636-af7b-5785ce2f316e",
+        "testCaseType": "TestCase",
+        "executionTemplateInvokeIsolated": false,
+        "fileName": "TestCase\\TC_04_UpdateUser.xaml"
+      },
+      {
+        "editingStatus": "InProgress",
+        "testCaseId": "f252fff9-d6c4-4627-9484-1cb7e8781c0a",
+        "testCaseType": "TestCase",
+        "executionTemplateInvokeIsolated": false,
+        "fileName": "main.xaml"
       }
     ],
     "saveToCloud": false
