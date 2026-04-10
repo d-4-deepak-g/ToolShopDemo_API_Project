@@ -1,8 +1,7 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="TC_01_createUser" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:ar="clr-namespace:atuipath_utilities.Report;assembly=atuipath_utilities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:ra="clr-namespace:ReporterForUiPath.Activities;assembly=ReporterForUiPath.Activities" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:si="clr-namespace:System.IO;assembly=System.Private.CoreLib" xmlns:uascw="clr-namespace:UiPath.Activities.System.Compression.Workflow;assembly=UiPath.System.Activities" xmlns:uga="clr-namespace:UiPath.GSuite.Activities;assembly=UiPath.GSuite.Activities" xmlns:ugage="clr-namespace:UiPath.GSuite.Activities.Gmail.Enums;assembly=UiPath.GSuite.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:usau="clr-namespace:UiPath.Shared.Activities.Utils;assembly=UiPath.GSuite.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="TC_05_WebLoginAfterUpdate" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:ra="clr-namespace:ReporterForUiPath.Activities;assembly=ReporterForUiPath.Activities" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:si="clr-namespace:System.IO;assembly=System.Private.CoreLib" xmlns:t="clr-namespace:ToolShopDemoLib;assembly=ToolShopDemoLib" xmlns:t1="clr-namespace:ToolShopDemoLib;assembly=ToolShopDemoLib.Core" xmlns:uascw="clr-namespace:UiPath.Activities.System.Compression.Workflow;assembly=UiPath.System.Activities" xmlns:uga="clr-namespace:UiPath.GSuite.Activities;assembly=UiPath.GSuite.Activities" xmlns:ugage="clr-namespace:UiPath.GSuite.Activities.Gmail.Enums;assembly=UiPath.GSuite.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:usau="clr-namespace:UiPath.Shared.Activities.Utils;assembly=UiPath.GSuite.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="suiteIdLocal" Type="OutArgument(x:String)" />
     <x:Property Name="reportIdLocal" Type="InArgument(x:Int32)" />
-    <x:Property Name="testIdLocal" Type="OutArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
@@ -68,13 +67,14 @@
       <x:String>UiPath.GSuite.Activities.Gmail.Enums</x:String>
       <x:String>UiPath.GSuite.Activities</x:String>
       <x:String>UiPath.Platform</x:String>
-      <x:String>UiPath.Web</x:String>
-      <x:String>UiPath.Web.Activities</x:String>
       <x:String>UiPath.Web.Activities.JSON.Models</x:String>
       <x:String>Newtonsoft.Json.Linq</x:String>
       <x:String>Newtonsoft.Json</x:String>
       <x:String>System.Dynamic</x:String>
       <x:String>System.Collections.Specialized</x:String>
+      <x:String>UiPath.Web.Activities</x:String>
+      <x:String>ToolShopDemoLib</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities.Models</x:String>
       <x:String>System.Runtime.InteropServices</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
@@ -167,15 +167,17 @@
       <AssemblyReference>WindowsBase</AssemblyReference>
       <AssemblyReference>UiPath.GSuite.Activities</AssemblyReference>
       <AssemblyReference>UiPath.CodedWorkflows</AssemblyReference>
-      <AssemblyReference>UiPath.Web</AssemblyReference>
       <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>System.Collections.Specialized</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>ToolShopDemoLib.Core</AssemblyReference>
+      <AssemblyReference>ToolShopDemoLib</AssemblyReference>
       <AssemblyReference>System.Text.Json</AssemblyReference>
       <AssemblyReference>System.Windows.Forms.Design</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="877.2,6269.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap:VirtualizedContainerService.HintSize="877.2,4727.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="dt_dataTable" />
       <Variable x:TypeArguments="x:Int32" Name="int_reportID" />
@@ -184,21 +186,7 @@
       <Variable x:TypeArguments="si:DirectoryInfo" Name="latestFolder" />
       <Variable x:TypeArguments="x:String" Name="latestFolderPath" />
       <Variable x:TypeArguments="x:String" Name="zipPath" />
-      <Variable x:TypeArguments="x:String" Name="email" />
-      <Variable x:TypeArguments="x:String" Name="password" />
-      <Variable x:TypeArguments="x:String" Name="baseURL" />
-      <Variable x:TypeArguments="x:String" Name="baseurl">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:String x:Key="SourceIdRef">InvokeWorkflowFile_1</x:String>
-            <x:String x:Key="SourcePropertyName">baseURL</x:String>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </Variable>
-      <Variable x:TypeArguments="x:String" Name="newUserBody" />
-      <Variable x:TypeArguments="x:Int32" Name="responseCode" />
-      <Variable x:TypeArguments="x:String" Name="response" />
-      <Variable x:TypeArguments="x:String" Name="email_1">
+      <Variable x:TypeArguments="x:String" Name="email">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:String x:Key="SourceIdRef">InvokeWorkflowFile_1</x:String>
@@ -206,21 +194,23 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </Variable>
-      <Variable x:TypeArguments="x:String" Name="id" />
-      <Variable x:TypeArguments="sd:DataTable" Name="dt_buildTable" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="582.4,6246.4" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="582.4,4704" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <Sequence DisplayName="Try" sap:VirtualizedContainerService.HintSize="580.8,3904" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="Try" sap:VirtualizedContainerService.HintSize="580.8,2027.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
-            <Variable x:TypeArguments="njl:JObject" Name="responseObject" />
-            <Variable x:TypeArguments="njl:JObject" Name="jsonUserObject" />
-            <Variable x:TypeArguments="x:String" Name="updatedUserBody" />
+            <Variable x:TypeArguments="x:String" Name="updateUserBody" />
+            <Variable x:TypeArguments="njl:JObject" Name="UpdateUserObject" />
+            <Variable x:TypeArguments="x:String" Name="expectedUpdatedName" />
+            <Variable x:TypeArguments="sd:DataTable" Name="dt_userCred" />
+            <Variable x:TypeArguments="sd:DataRow" Name="lastRow" />
+            <Variable x:TypeArguments="x:String" Name="email" />
+            <Variable x:TypeArguments="x:String" Name="password" />
           </Sequence.Variables>
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -252,10 +242,10 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ra:CreateReport ContinueOnError="{x:Null}" DisplayName="Create Report" sap:VirtualizedContainerService.HintSize="416,157.6" sap2010:WorkflowViewState.IdRef="CreateReport_1" ReportName="TC_01 CreateUser">
+                <ra:CreateReport ContinueOnError="{x:Null}" DisplayName="Create Report" sap:VirtualizedContainerService.HintSize="416,157.6" sap2010:WorkflowViewState.IdRef="CreateReport_1" ReportName="TC_05_WebLoginAfterUpdate">
                   <ra:CreateReport.ReportLocation>
                     <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_64">Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Documents\\UiPath\\ToolShopDemo_API_Project\\Reports"</CSharpValue>
+                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_26">Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Documents\\UiPath\\AutomationExerciseProjectForFriday\\Reports"</CSharpValue>
                     </InArgument>
                   </ra:CreateReport.ReportLocation>
                   <ra:CreateReport.isCreated>
@@ -276,7 +266,7 @@
               </Sequence>
             </If.Else>
           </If>
-          <ra:StartSuite ContinueOnError="{x:Null}" DisplayName="Start Suite" sap:VirtualizedContainerService.HintSize="547.2,117.6" sap2010:WorkflowViewState.IdRef="StartSuite_1" SuiteName="create user suite">
+          <ra:StartSuite ContinueOnError="{x:Null}" DisplayName="Start Suite" sap:VirtualizedContainerService.HintSize="547.2,117.6" sap2010:WorkflowViewState.IdRef="StartSuite_1" SuiteName="TC_05_WebLoginAfterUpdate">
             <ra:StartSuite.ReportId>
               <InArgument x:TypeArguments="x:Int32">
                 <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">reportIdLocal</CSharpValue>
@@ -288,292 +278,125 @@
               </OutArgument>
             </ra:StartSuite.suiteId>
           </ra:StartSuite>
-          <ra:StartTest ContinueOnError="{x:Null}" TagName="{x:Null}" TestDescription="{x:Null}" DisplayName="Start Test" sap:VirtualizedContainerService.HintSize="547.2,117.6" sap2010:WorkflowViewState.IdRef="StartTest_1" Priority="Low" TestName="create user Test">
-            <ra:StartTest.ReportId>
-              <InArgument x:TypeArguments="x:Int32">
-                <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_55">reportIdLocal</CSharpValue>
-              </InArgument>
-            </ra:StartTest.ReportId>
-            <ra:StartTest.SuiteId>
-              <InArgument x:TypeArguments="x:String">
-                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_56">suiteIdLocal</CSharpValue>
-              </InArgument>
-            </ra:StartTest.SuiteId>
-            <ra:StartTest.testId>
-              <OutArgument x:TypeArguments="x:String">
-                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_21">testIdLocal</CSharpReference>
-              </OutArgument>
-            </ra:StartTest.testId>
-          </ra:StartTest>
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="GetExcelUtility - Invoke Workflow File (GetExcelUtility.xaml)" sap:VirtualizedContainerService.HintSize="547.2,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="GetExcelUtility.xaml">
             <ui:InvokeWorkflowFile.Arguments>
-              <OutArgument x:TypeArguments="x:String" x:Key="baseURL">
-                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_12">baseURL</CSharpReference>
+              <OutArgument x:TypeArguments="x:String" x:Key="baseURL" />
+              <OutArgument x:TypeArguments="x:String" x:Key="newUserBody" />
+              <OutArgument x:TypeArguments="x:String" x:Key="updateUserBody">
+                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_10">updateUserBody</CSharpReference>
               </OutArgument>
-              <OutArgument x:TypeArguments="x:String" x:Key="newUserBody">
-                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_13">newUserBody</CSharpReference>
-              </OutArgument>
-              <OutArgument x:TypeArguments="x:String" x:Key="updateUserBody" />
               <OutArgument x:TypeArguments="x:String" x:Key="email">
-                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_24">email_1</CSharpReference>
+                <CSharpReference x:TypeArguments="x:String">email</CSharpReference>
               </OutArgument>
-              <OutArgument x:TypeArguments="x:String" x:Key="password">
-                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_25">password</CSharpReference>
-              </OutArgument>
+              <OutArgument x:TypeArguments="x:String" x:Key="password" />
               <OutArgument x:TypeArguments="x:String" x:Key="expectedNewName" />
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
-          <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="547.2,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+          <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonSample="{x:Null}" Settings="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="547.2,173.6" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_1">
+            <ui:DeserializeJson.JsonObject>
+              <OutArgument x:TypeArguments="njl:JObject">
+                <CSharpReference x:TypeArguments="njl:JObject" sap2010:WorkflowViewState.IdRef="CSharpReference`1_11">UpdateUserObject</CSharpReference>
+              </OutArgument>
+            </ui:DeserializeJson.JsonObject>
+            <ui:DeserializeJson.JsonString>
+              <InArgument x:TypeArguments="x:String">
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_30">updateUserBody</CSharpValue>
+              </InArgument>
+            </ui:DeserializeJson.JsonString>
+          </ui:DeserializeJson>
+          <Assign sap:VirtualizedContainerService.HintSize="547.2,174.4" sap2010:WorkflowViewState.IdRef="Assign_5">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">
+                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_12">expectedUpdatedName</CSharpReference>
+              </OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_31">UpdateUserObject["first_name"].ToString() + " " + UpdateUserObject["last_name"].ToString()</CSharpValue>
+              </InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:ReadRange Range="{x:Null}" AddHeaders="True" DisplayName="Read Range Workbook" sap:VirtualizedContainerService.HintSize="547.2,120" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="userCred" WorkbookPath="TestData\apiData.xlsx">
+            <ui:ReadRange.DataTable>
+              <OutArgument x:TypeArguments="sd:DataTable">
+                <CSharpReference x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_13">dt_userCred</CSharpReference>
+              </OutArgument>
+            </ui:ReadRange.DataTable>
+          </ui:ReadRange>
+          <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="547.2,212" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
             <ui:MultipleAssign.AssignOperations>
               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
                   <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:String">
-                      <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_10">email</CSharpReference>
+                    <OutArgument x:TypeArguments="sd:DataRow">
+                      <CSharpReference x:TypeArguments="sd:DataRow" sap2010:WorkflowViewState.IdRef="CSharpReference`1_14">lastRow</CSharpReference>
                     </OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_49">"dg" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "@gmail.com"</CSharpValue>
+                    <InArgument x:TypeArguments="sd:DataRow">
+                      <CSharpValue x:TypeArguments="sd:DataRow" sap2010:WorkflowViewState.IdRef="CSharpValue`1_32">dt_userCred.Rows[dt_userCred.Rows.Count - 1]</CSharpValue>
                     </InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
                   <ui:AssignOperation.To>
                     <OutArgument x:TypeArguments="x:String">
-                      <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_11">password</CSharpReference>
+                      <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_15">email</CSharpReference>
                     </OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">Testing@123321</InArgument>
+                    <InArgument x:TypeArguments="x:String">
+                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_33">lastRow["email"].ToString()</CSharpValue>
+                    </InArgument>
+                  </ui:AssignOperation.Value>
+                </ui:AssignOperation>
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+                  <ui:AssignOperation.To>
+                    <OutArgument x:TypeArguments="x:String">
+                      <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_16">password</CSharpReference>
+                    </OutArgument>
+                  </ui:AssignOperation.To>
+                  <ui:AssignOperation.Value>
+                    <InArgument x:TypeArguments="x:String">
+                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_34">lastRow["password"].ToString()</CSharpValue>
+                    </InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
               </scg:List>
             </ui:MultipleAssign.AssignOperations>
           </ui:MultipleAssign>
-          <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonSample="{x:Null}" Settings="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="547.2,173.6" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_3">
-            <ui:DeserializeJson.JsonObject>
-              <OutArgument x:TypeArguments="njl:JObject">
-                <CSharpReference x:TypeArguments="njl:JObject" sap2010:WorkflowViewState.IdRef="CSharpReference`1_18">jsonUserObject</CSharpReference>
-              </OutArgument>
-            </ui:DeserializeJson.JsonObject>
-            <ui:DeserializeJson.JsonString>
+          <t:LoginLibrary sap:VirtualizedContainerService.HintSize="547.2,373.6" sap2010:WorkflowViewState.IdRef="LoginLibrary_1">
+            <t:LoginLibrary.in_Expected_Name>
               <InArgument x:TypeArguments="x:String">
-                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_50">newUserBody</CSharpValue>
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_35">expectedUpdatedName</CSharpValue>
               </InArgument>
-            </ui:DeserializeJson.JsonString>
-          </ui:DeserializeJson>
-          <Assign sap:VirtualizedContainerService.HintSize="547.2,174.4" sap2010:WorkflowViewState.IdRef="Assign_4">
-            <Assign.To>
-              <OutArgument x:TypeArguments="njl:JToken">
-                <CSharpReference x:TypeArguments="njl:JToken" sap2010:WorkflowViewState.IdRef="CSharpReference`1_19">jsonUserObject["email"]</CSharpReference>
-              </OutArgument>
-            </Assign.To>
-            <Assign.Value>
-              <InArgument x:TypeArguments="njl:JToken">
-                <CSharpValue x:TypeArguments="njl:JToken" sap2010:WorkflowViewState.IdRef="CSharpValue`1_51">email</CSharpValue>
+            </t:LoginLibrary.in_Expected_Name>
+            <t:LoginLibrary.in_LoginType>
+              <InArgument x:TypeArguments="t1:LoginType">
+                <CSharpValue x:TypeArguments="t1:LoginType" sap2010:WorkflowViewState.IdRef="CSharpValue`1_36">ToolShopDemoLib.LoginType.VALID</CSharpValue>
               </InArgument>
-            </Assign.Value>
-          </Assign>
-          <Assign sap:VirtualizedContainerService.HintSize="547.2,174.4" sap2010:WorkflowViewState.IdRef="Assign_5">
-            <Assign.To>
-              <OutArgument x:TypeArguments="x:String">
-                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_20">updatedUserBody</CSharpReference>
-              </OutArgument>
-            </Assign.To>
-            <Assign.Value>
+            </t:LoginLibrary.in_LoginType>
+            <t:LoginLibrary.in_email>
               <InArgument x:TypeArguments="x:String">
-                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_52">jsonUserObject.ToString()</CSharpValue>
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_38">email</CSharpValue>
               </InArgument>
-            </Assign.Value>
-          </Assign>
-          <ui:HttpClient ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" FileAttachments="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" ResponseAttachment="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" Username="{x:Null}" AcceptFormat="JSON" AuthenticationType="None" BodyFormat="application/json" DisplayName="Http client" EnableSSLVerification="True" EndPoint="https://api.practicesoftwaretesting.com/users/register" sap:VirtualizedContainerService.HintSize="547.2,103.2" sap2010:WorkflowViewState.IdRef="HttpClient_1" Method="POST" TimeoutMS="6000">
-            <ui:HttpClient.Attachments>
-              <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-            </ui:HttpClient.Attachments>
-            <ui:HttpClient.Body>
+            </t:LoginLibrary.in_email>
+            <t:LoginLibrary.in_password>
               <InArgument x:TypeArguments="x:String">
-                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_53">updatedUserBody</CSharpValue>
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_37">password</CSharpValue>
               </InArgument>
-            </ui:HttpClient.Body>
-            <ui:HttpClient.Cookies>
-              <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-            </ui:HttpClient.Cookies>
-            <ui:HttpClient.Headers>
-              <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-            </ui:HttpClient.Headers>
-            <ui:HttpClient.Parameters>
-              <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-            </ui:HttpClient.Parameters>
-            <ui:HttpClient.Result>
-              <OutArgument x:TypeArguments="x:String">
-                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_14">response</CSharpReference>
-              </OutArgument>
-            </ui:HttpClient.Result>
-            <ui:HttpClient.StatusCode>
-              <OutArgument x:TypeArguments="x:Int32">
-                <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_15">responseCode</CSharpReference>
-              </OutArgument>
-            </ui:HttpClient.StatusCode>
-            <ui:HttpClient.UrlSegments>
-              <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-            </ui:HttpClient.UrlSegments>
-          </ui:HttpClient>
-          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="547.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Info">
-            <ui:LogMessage.Message>
-              <InArgument x:TypeArguments="x:Object">
-                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_48">"status code is " + responseCode.ToString()</CSharpValue>
+            </t:LoginLibrary.in_password>
+            <t:LoginLibrary.reportIdLocal>
+              <InArgument x:TypeArguments="x:Int32">
+                <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_40">reportIdLocal</CSharpValue>
               </InArgument>
-            </ui:LogMessage.Message>
-          </ui:LogMessage>
-          <If sap:VirtualizedContainerService.HintSize="547.2,1832.8" sap2010:WorkflowViewState.IdRef="If_4">
-            <If.Condition>
-              <InArgument x:TypeArguments="x:Boolean">
-                <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_41">responseCode==201</CSharpValue>
+            </t:LoginLibrary.reportIdLocal>
+            <t:LoginLibrary.suiteIdLocal>
+              <InArgument x:TypeArguments="x:String">
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_39">suiteIdLocal</CSharpValue>
               </InArgument>
-            </If.Condition>
-            <If.Then>
-              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,1678.4" sap2010:WorkflowViewState.IdRef="Sequence_12">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info">
-                  <ui:LogMessage.Message>
-                    <InArgument x:TypeArguments="x:Object">
-                      <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_46">"status code is " + responseCode.ToString()</CSharpValue>
-                    </InArgument>
-                  </ui:LogMessage.Message>
-                </ui:LogMessage>
-                <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonSample="{x:Null}" Settings="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="416,173.6" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_2">
-                  <ui:DeserializeJson.JsonObject>
-                    <OutArgument x:TypeArguments="njl:JObject">
-                      <CSharpReference x:TypeArguments="njl:JObject" sap2010:WorkflowViewState.IdRef="CSharpReference`1_17">responseObject</CSharpReference>
-                    </OutArgument>
-                  </ui:DeserializeJson.JsonObject>
-                  <ui:DeserializeJson.JsonString>
-                    <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_44">response</CSharpValue>
-                    </InArgument>
-                  </ui:DeserializeJson.JsonString>
-                </ui:DeserializeJson>
-                <Assign sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="Assign_6">
-                  <Assign.To>
-                    <OutArgument x:TypeArguments="x:String">
-                      <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_27">id</CSharpReference>
-                    </OutArgument>
-                  </Assign.To>
-                  <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_71">responseObject["id"].ToString()</CSharpValue>
-                    </InArgument>
-                  </Assign.Value>
-                </Assign>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info">
-                  <ui:LogMessage.Message>
-                    <InArgument x:TypeArguments="x:Object">
-                      <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_45">"user created successfully "+ responseObject</CSharpValue>
-                    </InArgument>
-                  </ui:LogMessage.Message>
-                </ui:LogMessage>
-                <ar:passedStep sap:VirtualizedContainerService.HintSize="416,382.4" sap2010:WorkflowViewState.IdRef="passedStep_1" str_in_stepDescription="User created successfully " str_in_stepName="Create User API">
-                  <ar:passedStep.str_in_actualStep>
-                    <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_65" xml:space="preserve">"User created and  status code is: " + responseCode.ToString()</CSharpValue>
-                    </InArgument>
-                  </ar:passedStep.str_in_actualStep>
-                  <ar:passedStep.str_in_expectedStep>
-                    <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_66" xml:space="preserve">"User created and  status code is: " + responseCode.ToString()</CSharpValue>
-                    </InArgument>
-                  </ar:passedStep.str_in_expectedStep>
-                  <ar:passedStep.str_in_reportId>
-                    <InArgument x:TypeArguments="x:Int32">
-                      <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_54">reportIdLocal</CSharpValue>
-                    </InArgument>
-                  </ar:passedStep.str_in_reportId>
-                  <ar:passedStep.str_in_testId>
-                    <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_57">testIdLocal</CSharpValue>
-                    </InArgument>
-                  </ar:passedStep.str_in_testId>
-                </ar:passedStep>
-                <ui:Comment sap:VirtualizedContainerService.HintSize="416,88" sap2010:WorkflowViewState.IdRef="Comment_1" Text="// writing credentials into excel" />
-                <ui:BuildDataTable DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="416,92" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;email&quot; msdata:Caption=&quot;&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;100&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;password&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;id&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;">
-                  <ui:BuildDataTable.DataTable>
-                    <OutArgument x:TypeArguments="sd:DataTable">
-                      <CSharpReference x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_22">dt_buildTable</CSharpReference>
-                    </OutArgument>
-                  </ui:BuildDataTable.DataTable>
-                </ui:BuildDataTable>
-                <ui:AddDataRow DataRow="{x:Null}" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="416,220" sap2010:WorkflowViewState.IdRef="AddDataRow_1">
-                  <ui:AddDataRow.ArrayRow>
-                    <InArgument x:TypeArguments="s:Object[]">
-                      <CSharpValue x:TypeArguments="s:Object[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_72">new Object[] { email, password, id }</CSharpValue>
-                    </InArgument>
-                  </ui:AddDataRow.ArrayRow>
-                  <ui:AddDataRow.DataTable>
-                    <InOutArgument x:TypeArguments="sd:DataTable">
-                      <CSharpReference x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_23">dt_buildTable</CSharpReference>
-                    </InOutArgument>
-                  </ui:AddDataRow.DataTable>
-                </ui:AddDataRow>
-                <ui:AppendRange DisplayName="Append Range Workbook" sap:VirtualizedContainerService.HintSize="416,139.2" sap2010:WorkflowViewState.IdRef="AppendRange_1" SheetName="userCred" WorkbookPath="TestData\apiData.xlsx">
-                  <ui:AppendRange.DataTable>
-                    <InArgument x:TypeArguments="sd:DataTable">
-                      <CSharpValue x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_68">dt_buildTable</CSharpValue>
-                    </InArgument>
-                  </ui:AppendRange.DataTable>
-                </ui:AppendRange>
-              </Sequence>
-            </If.Then>
-            <If.Else>
-              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="Sequence_13">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="416,175" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info">
-                  <ui:LogMessage.Message>
-                    <InArgument x:TypeArguments="x:Object">
-                      <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_47" xml:space="preserve">"user get failed to register  and response code is" + responseCode.ToString()</CSharpValue>
-                    </InArgument>
-                  </ui:LogMessage.Message>
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </ui:LogMessage>
-                <ar:failedStep sap:VirtualizedContainerService.HintSize="416,374" sap2010:WorkflowViewState.IdRef="failedStep_1" str_in_stepDescription="User created successfully with valid data" str_in_stepName="Create User API">
-                  <ar:failedStep.str_in_actualStep>
-                    <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_62">"User failed to register and status code " + responseCode.ToString()</CSharpValue>
-                    </InArgument>
-                  </ar:failedStep.str_in_actualStep>
-                  <ar:failedStep.str_in_expectedStep>
-                    <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_63">"User register with status code " + responseCode.ToString()</CSharpValue>
-                    </InArgument>
-                  </ar:failedStep.str_in_expectedStep>
-                  <ar:failedStep.str_in_reportId>
-                    <InArgument x:TypeArguments="x:Int32">
-                      <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_60">reportIdLocal</CSharpValue>
-                    </InArgument>
-                  </ar:failedStep.str_in_reportId>
-                  <ar:failedStep.str_in_testId>
-                    <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_61">testIdLocal</CSharpValue>
-                    </InArgument>
-                  </ar:failedStep.str_in_testId>
-                </ar:failedStep>
-              </Sequence>
-            </If.Else>
-          </If>
+            </t:LoginLibrary.suiteIdLocal>
+          </t:LoginLibrary>
         </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>
@@ -582,14 +405,13 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="580.8,24.8" sap2010:WorkflowViewState.IdRef="Sequence_4">
+            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="580.8,225.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="478,166" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Error">
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="547.2,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Error">
                 <ui:LogMessage.Message>
                   <InArgument x:TypeArguments="x:Object">
                     <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">"system error occured " + exception.Message</CSharpValue>
@@ -601,20 +423,19 @@
         </Catch>
       </TryCatch.Catches>
       <TryCatch.Finally>
-        <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="580.8,2152.8" sap2010:WorkflowViewState.IdRef="Sequence_5">
+        <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="580.8,2286.4" sap2010:WorkflowViewState.IdRef="Sequence_5">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              <x:Boolean x:Key="IsPinned">False</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Sequence DisplayName="SendMail" sap:VirtualizedContainerService.HintSize="547.2,2092.8" sap2010:WorkflowViewState.IdRef="Sequence_7">
+          <Sequence DisplayName="SendMail" sap:VirtualizedContainerService.HintSize="547.2,2226.4" sap2010:WorkflowViewState.IdRef="Sequence_7">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <If sap:VirtualizedContainerService.HintSize="513.6,2009.6" sap2010:WorkflowViewState.IdRef="If_2">
+            <If sap:VirtualizedContainerService.HintSize="513.6,2143.2" sap2010:WorkflowViewState.IdRef="If_2">
               <If.Condition>
                 <InArgument x:TypeArguments="x:Boolean">
                   <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_24">int_reportID==0</CSharpValue>
@@ -627,7 +448,7 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
               <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="512,1790.4" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="512,1788" sap2010:WorkflowViewState.IdRef="Sequence_8">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -645,7 +466,7 @@
                           </ui:AssignOperation.To>
                           <ui:AssignOperation.Value>
                             <InArgument x:TypeArguments="x:String">
-                              <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_73">Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Documents\\UiPath\\ToolShopDemo_API_Project\\Reports"</CSharpValue>
+                              <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_41">Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Documents\\UiPath\\ToolShopDemo_API_Project\\Reports"</CSharpValue>
                             </InArgument>
                           </ui:AssignOperation.Value>
                         </ui:AssignOperation>
@@ -720,7 +541,7 @@
                       </Sequence>
                     </If.Else>
                   </If>
-                  <Assign sap:VirtualizedContainerService.HintSize="478,175" sap2010:WorkflowViewState.IdRef="Assign_1">
+                  <Assign sap:VirtualizedContainerService.HintSize="478.4,174.4" sap2010:WorkflowViewState.IdRef="Assign_1">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:String">
                         <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_8">zipPath</CSharpReference>
@@ -732,7 +553,7 @@
                       </InArgument>
                     </Assign.Value>
                   </Assign>
-                  <uascw:CompressFiles CompressedFileInfo="{x:Null}" CompressedResource="{x:Null}" Password="{x:Null}" ResourcesToArchive="{x:Null}" SecurePassword="{x:Null}" AllowDuplicateContentNames="False" CodePage="Default" CompressionLevel="Normal" DisplayName="Compress/Zip Files" EncryptionAlgorithm="Classic" sap:VirtualizedContainerService.HintSize="478,249" sap2010:WorkflowViewState.IdRef="CompressFiles_1" OverrideExistingFile="True">
+                  <uascw:CompressFiles CompressedFileInfo="{x:Null}" CompressedResource="{x:Null}" Password="{x:Null}" ResourcesToArchive="{x:Null}" SecurePassword="{x:Null}" AllowDuplicateContentNames="False" CodePage="Default" CompressionLevel="Normal" DisplayName="Compress/Zip Files" EncryptionAlgorithm="Classic" sap:VirtualizedContainerService.HintSize="478.4,248" sap2010:WorkflowViewState.IdRef="CompressFiles_1" OverrideExistingFile="True">
                     <uascw:CompressFiles.CompressedFileName>
                       <InArgument x:TypeArguments="x:String">
                         <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_17">zipPath</CSharpValue>
@@ -746,7 +567,7 @@
                       </scg:List>
                     </uascw:CompressFiles.ContentToArchive>
                   </uascw:CompressFiles>
-                  <uga:SendEmailConnections ArgumentAttachmentPaths="{x:Null}" ArgumentAttachments="{x:Null}" AttachmentPaths="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" ConnectionAccountName="{x:Null}" ContinueOnError="{x:Null}" ReplyTo="{x:Null}" SingleAttachment="{x:Null}" TextBody="{x:Null}" AttachmentInputMode="UseExisting" AuthScopesInvalid="False" ConnectionId="3ad2bbd1-ca01-4c3f-a028-4e5f521ad475" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="478,505" sap2010:WorkflowViewState.IdRef="SendEmailConnections_1" Importance="Normal" InputType="HTML" SaveAsDraft="True" Subject="Test case execution report" UseConnectionService="True">
+                  <uga:SendEmailConnections ArgumentAttachmentPaths="{x:Null}" ArgumentAttachments="{x:Null}" AttachmentPaths="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" ConnectionAccountName="{x:Null}" ContinueOnError="{x:Null}" ReplyTo="{x:Null}" SingleAttachment="{x:Null}" TextBody="{x:Null}" AttachmentInputMode="UseExisting" AuthScopesInvalid="False" ConnectionId="3ad2bbd1-ca01-4c3f-a028-4e5f521ad475" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="478.4,504" sap2010:WorkflowViewState.IdRef="SendEmailConnections_1" Importance="Normal" InputType="HTML" SaveAsDraft="True" Subject="Test case execution report" UseConnectionService="True">
                     <uga:SendEmailConnections.Attachments>
                       <InArgument x:TypeArguments="scg:IEnumerable(upr:IResource)">
                         <CSharpValue x:TypeArguments="scg:IEnumerable(upr:IResource)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_29">new List&lt;UiPath.Platform.ResourceHandling.IResource&gt; { UiPath.Platform.ResourceHandling.LocalResource.FromPath(zipPath) }</CSharpValue>
@@ -780,12 +601,19 @@
                 </Sequence>
               </If.Then>
               <If.Else>
-                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="512,90" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="512,225.6" sap2010:WorkflowViewState.IdRef="Sequence_9">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="478.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Warn">
+                    <ui:LogMessage.Message>
+                      <InArgument x:TypeArguments="x:Object">
+                        <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_21">"Report not created for this Test Case"</CSharpValue>
+                      </InArgument>
+                    </ui:LogMessage.Message>
+                  </ui:LogMessage>
                 </Sequence>
               </If.Else>
             </If>

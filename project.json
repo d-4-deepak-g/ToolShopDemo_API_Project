@@ -100,6 +100,13 @@
         "testCaseType": "TestCase",
         "executionTemplateInvokeIsolated": false,
         "fileName": "main.xaml"
+      },
+      {
+        "editingStatus": "InProgress",
+        "testCaseId": "5c453607-01e0-45f7-a064-0af39f7eca59",
+        "testCaseType": "TestCase",
+        "executionTemplateInvokeIsolated": false,
+        "fileName": "TestCase\\TC_05_WebLoginAfterUpdate.xaml"
       }
     ],
     "saveToCloud": false
